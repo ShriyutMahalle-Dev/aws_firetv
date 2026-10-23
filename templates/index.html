@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusTV — Ambient Living Room Productivity Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="top-header">
+            <div class="brand">
+                <span class="logo-icon">⚡</span>
+                <span class="brand-name">FocusTV <small>STUDY HUB</small></span>
+            </div>
+            <div class="clock-display" id="live-clock">--:--:--</div>
+            <div class="badge remote-badge">
+                <span class="dot"></span> Fire TV Remote Active
+            </div>
+        </header>
+
+        <!-- Main Grid Layout -->
+        <main class="grid-layout" id="main-grid">
+            
+            <!-- Left Column: Tasks -->
+            <section class="card glass-panel tasks-panel">
+                <div class="panel-header">
+                    <h2> Study & Productivity Tasks</h2>
+                </div>
+                <div class="task-list" id="task-list">
+                    <!-- Tasks injected by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Center Column: Adjustable 3-Hour Timer -->
+            <section class="card glass-panel timer-panel" id="timer-panel-card">
+                <div class="panel-header">
+                    <h2>⏱️ Ambient Focus Station</h2>
+                </div>
+                
+                <div class="timer-display-box">
+                    <div class="timer-time" id="timer-display">25:00</div>
+                    <div class="timer-label" id="timer-status-label">Ready to Focus</div>
+                </div>
+
+                <!-- D-Pad Controls -->
+                <div class="timer-adjust-controls" id="timer-edit-controls">
+                    <button class="nav-item btn-adjust" onclick="adjustTime(-15)">-15m</button>
+                    <button class="nav-item btn-adjust" onclick="adjustTime(-5)">-5m</button>
+                    <button class="nav-item btn-adjust" onclick="adjustTime(5)">+5m</button>
+                    <button class="nav-item btn-adjust" onclick="adjustTime(15)">+15m</button>
+                </div>
+
+                <div class="timer-preset-row" id="timer-preset-controls">
+                    <button class="nav-item btn-preset" onclick="setTimerMinutes(25)">25m</button>
+                    <button class="nav-item btn-preset" onclick="setTimerMinutes(50)">50m</button>
+                    <button class="nav-item btn-preset" onclick="setTimerMinutes(90)">90m</button>
+                    <button class="nav-item btn-preset" onclick="setTimerMinutes(180)">3 Hours (Max)</button>
+                </div>
+
+                <div class="timer-actions">
+                    <button class="nav-item btn-primary" id="btn-start-timer" onclick="toggleTimer()">Start Session</button>
+                    <button class="nav-item btn-secondary" onclick="resetTimer()">Reset</button>
+                </div>
+            </section>
+
+            <!-- Right Column: AI Voice Assistant & Query Box -->
+            <section class="card glass-panel ai-panel">
+                <div class="panel-header">
+                    <h2> AI Voice Assistant & Doubt Solver</h2>
+                </div>
+                
+                <div class="ai-chat-box">
+                    <div class="ai-response-area" id="ai-insights-content">
+                        <p class="ai-greeting"> Speak your doubt aloud or type it below. FocusTV will query the backend API and stream the exact tutorial safely inside your study session!</p>
+                    </div>
+                </div>
+
+                <!-- Voice Input Button -->
+                <div class="ai-voice-container">
+                    <button class="nav-item btn-mic" id="mic-btn" onclick="startVoiceRecognition()">
+                        <span id="mic-icon">🎙️</span> <span id="mic-text">Hold to Speak Doubt</span>
+                    </button>
+                </div>
+
+                <!-- Custom Input Field -->
+                <div class="ai-input-container">
+                    <input type="text" id="custom-ai-input" class="nav-item ai-text-input" placeholder="Type query (e.g. Python, Virtual Memory)..." onkeydown="handleInputKeyPress(event)">
+                    <button class="nav-item btn-ai-submit" onclick="submitCustomDoubt()">Ask AI</button>
+                </div>
+
+                <div class="quick-ai-actions">
+                    <p class="section-sub">Quick Topic Queries:</p>
+                    <button class="nav-item btn-ai-query" onclick="askAIDoubt('Who built Python')"> Who built Python?</button>
+                    <button class="nav-item btn-ai-query" onclick="askAIDoubt('Virtual Memory')"> Virtual Memory</button>
+                    <button class="nav-item btn-ai-query" onclick="askAIDoubt('C++ Data Structures')"> C++ Data Structures</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Centered Cinematic Video Modal Overlay -->
+    <div class="video-modal-overlay" id="video-player-box" style="display: none;">
+        <div class="video-modal-content glass-panel">
+            <div class="video-header">
+                <h3 id="video-title">Curated Educational Stream</h3>
+                <button class="nav-item btn-small-danger" onclick="closeVideo()">✕ Close Player</button>
+            </div>
+            <div class="iframe-wrapper">
+                <iframe id="focus-iframe" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
